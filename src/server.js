@@ -17,7 +17,7 @@ const   express = require('express'),
 
 app.use(cors())
 
-io.onconnection('connection', socket =>{
+io.on('connection', socket =>{
     
     socket.on('connectRoom', box =>{
         
