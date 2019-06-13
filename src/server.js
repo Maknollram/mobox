@@ -4,13 +4,13 @@ const   express = require('express'),
         app = express(),
         porta = process.env.PORT || 3333,
         server = require('http').Server(app),
-        os = require( 'os' ),
-        networkInterfaces = os.networkInterfaces(),
-        host =  networkInterfaces.wlx002719f5c60a[0].address, // para o adaptador wifi
+        // os = require( 'os' ), // configs para saber ip
+        // networkInterfaces = os.networkInterfaces(),
+        // host =  networkInterfaces.wlx002719f5c60a[0].address, // para o adaptador wifi
         // host =  networkInterfaces.enp1s0[0].address,
-        mensagens = app.listen(app.get('port'), () => {
-            console.log(`A aplicação rodará em http://${host}:${porta}`)
-        }),
+        // mensagens = app.listen(app.get('port'), () => {
+        //     console.log(`A aplicação rodará em http://${host}:${porta}`)
+        // }),
         io = require('socket.io')(server),
         cors = require('cors'),
         options = {
@@ -57,26 +57,26 @@ server.listen(porta)
 
 
 // console.log(networkInterfaces) //para saber a variável do endereço
-mensagens.on('error', onError);
+// mensagens.on('error', onError);
 
 /**
 * Evento listener para os erros do servidor
 */
 
-function onError(error) {
+// function onError(error) {
 
-// Lida com erros listen específicos
-switch (error.code) {
-    case 'EACCES':
-        console.error('Faltam privilégios para a pasta do aplicativo.')
-        process.exit(1)
-        break
-    case 'EADDRINUSE':
-        console.error(`Porta ${app.get('port')} em uso.`)
-        process.exit(1)
-        break
-    default:
-        throw error
-}
+//     // Lida com erros listen específicos
+//     switch (error.code) {
+//         case 'EACCES':
+//             console.error('Faltam privilégios para a pasta do aplicativo.')
+//             process.exit(1)
+//             break
+//         case 'EADDRINUSE':
+//             console.error(`Porta ${app.get('port')} em uso.`)
+//             process.exit(1)
+//             break
+//         default:
+//             throw error
+//     }
 
-}
+// }
