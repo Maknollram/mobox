@@ -9,12 +9,39 @@ class FileController{
 
         const file = await File.create({
             title: req.file.originalname,
-            path: req.file.key
+            boxId: req.params.id,
+            path: req.file.key,
         })
 
         box.files.push(file)
 
         await box.save()
+
+        req.io.sockets.in(box._id).emit('file', file)
+
+        return res.json(file)
+
+    }
+
+    async deleteFile(req, res){
+
+        const box = await Box.findById(req.params.id)
+        const file = await File.findById(req.body.fileId)
+        const fileId = req.body.fileId
+        
+        const files = box.files.filter( file => {
+            if(file._id != fileId){
+                return file
+            }
+        })
+
+        box.files = files
+
+        console.log(box)
+
+        await box.save()
+
+        await File.deleteOne( {_id: fileId})
 
         req.io.sockets.in(box._id).emit('file', file)
 

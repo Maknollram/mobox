@@ -1,4 +1,5 @@
-const Box = require('../models/Box')
+const   Box = require('../models/Box'),
+        File = require('../models/File')
 
 class BoxController{
     
@@ -18,6 +19,26 @@ class BoxController{
         })
 
         return res.json(box)
+    }
+
+    async list(req, res){
+
+        const box = await Box.find().sort( { title: 1 } )// 1 asc, -1 desc
+
+        return res.json(box)
+    }
+
+    async deleteBox(req, res){
+
+        const box = await Box.findById(req.params.id)
+        const id = req.params.id
+        
+        await box.deleteOne({_id: id})
+
+        await File.deleteMany({boxId: id})
+
+        return res.json(box)
+
     }
 
 }

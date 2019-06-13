@@ -7,6 +7,10 @@ const   File = new mongoose.Schema(
         type: String,
         required: true
     },
+    boxId: {
+        type: String,
+        required: true
+    },
     path: {
         type: String,
         required: true
