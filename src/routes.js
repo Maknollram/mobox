@@ -17,8 +17,8 @@ routes.post('/boxes/:id/files', multer(multerConfig).single('file'), FileControl
 
 routes.get('/list', BoxController.list)
 
-routes.post('/boxes/:id/deleteFile', FileController.deleteFile)
+// routes.post('/boxes/:id/deleteFile', FileController.deleteFile)
 
-routes.post('/boxes/:id/deleteBox', BoxController.deleteBox)
+// routes.post('/boxes/:id/deleteBox', BoxController.deleteBox)
 
 module.exports = routes
