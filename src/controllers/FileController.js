@@ -9,7 +9,6 @@ class FileController{
 
         const file = await File.create({
             title: req.file.originalname,
-            boxId: '',
             path: req.file.key
         })
 
