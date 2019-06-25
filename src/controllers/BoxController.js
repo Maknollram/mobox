@@ -34,7 +34,7 @@ class BoxController{
         
         const id = req.params.id
         
-        box.files.forEach(file =>{
+        box.files.forEach( async file =>{
         
             await File.deleteOne({_id: file._id})
                 
