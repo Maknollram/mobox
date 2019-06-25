@@ -31,11 +31,16 @@ class BoxController{
     async deleteBox(req, res){
 
         const box = await Box.findById(req.params.id)
+        
         const id = req.params.id
         
+        box.files.forEach(file =>{
+        
+            await File.deleteOne({_id: file._id})
+                
+        })
+        
         await box.deleteOne({_id: id})
-
-        await File.deleteMany({boxId: id})
 
         return res.json(box)
 
