@@ -41,6 +41,8 @@ class FileController{
         await box.save()
 
         await File.deleteOne( {_id: fileId})
+            
+        file = {}
 
         req.io.sockets.in(box._id).emit('file', file)
 
