@@ -42,7 +42,9 @@ class FileController{
 
         await File.deleteOne( {_id: fileId})
 
-        req.io.sockets.in(box._id).emit('file',file)
+        
+            
+        return res.json(file)
 
     }
 
