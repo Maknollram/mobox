@@ -29,7 +29,7 @@ class FileController{
         let box = await Box.findById(req.params.id)
         const file = await File.findById(req.body.fileId)
         const fileId = req.body.fileId
-        
+        console.log(JSON.stringify(file))
         const files = box.files.filter( file => {
             if(file._id != fileId){
                 
