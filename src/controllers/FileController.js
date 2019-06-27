@@ -1,5 +1,6 @@
 const   Box = require('../models/Box'),
-        File = require('../models/File')
+        File = require('../models/File'),
+        
 
 class FileController{
     
@@ -9,7 +10,6 @@ class FileController{
 
         const file = await File.create({
             title: req.file.originalname,
-            boxId: req.params.id,
             path: req.file.key
         })
 
@@ -25,7 +25,7 @@ class FileController{
 
     async deleteFile(req, res){
 
-        const box = await Box.findById(req.params.id)
+        let box = await Box.findById(req.params.id)
         const file = await File.findById(req.body.fileId)
         const fileId = req.body.fileId
         
@@ -42,9 +42,14 @@ class FileController{
         await box.save()
 
         await File.deleteOne( {_id: fileId})
+            
+        box = await Box.findById(req.params.id).populate({
+            path: 'files',
+            options: {sort: {createdAt: -1}}
+        })
 
-        req.io.sockets.in(box._id).emit('file', file)
-
+        req.io.sockets.in(box._id).emit('delete', box)
+            
         return res.json(file)
 
     }

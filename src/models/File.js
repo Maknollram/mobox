@@ -7,14 +7,11 @@ const   File = new mongoose.Schema(
         type: String,
         required: true
     },
-    boxId: {
-        type: String,
-        required: true
-    },
     path: {
         type: String,
         required: true
-    }
+    },
+    id: false // retira o id criado pelo populate
 }, {
     timestamps: true,
     toObject: { virtuals: true},
