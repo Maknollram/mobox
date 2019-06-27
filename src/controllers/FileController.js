@@ -1,5 +1,6 @@
 const   Box = require('../models/Box'),
         File = require('../models/File'),
+        fs = require('fs')
         
 
 class FileController{
@@ -31,13 +32,27 @@ class FileController{
         
         const files = box.files.filter( file => {
             if(file._id != fileId){
+                
                 return file
+
+            }else{
+
+                fs.unlink(file.url, (err) => {
+                   
+                    if (err) {
+                      
+                      console.error(err)
+
+                      return
+
+                    }
+                  
+                })
+
             }
         })
 
         box.files = files
-
-        console.log(box)
 
         await box.save()
 
