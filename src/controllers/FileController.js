@@ -29,7 +29,7 @@ class FileController{
         let box = await Box.findById(req.params.id)
         const file = await File.findById(req.body.fileId)
         const fileId = req.body.fileId
-        console.log(JSON.stringify(file))
+        console.log(JSON.stringify(file.url))
         const files = box.files.filter( file => {
             if(file._id != fileId){
                 
@@ -37,7 +37,7 @@ class FileController{
 
             }else{
 
-                fs.unlink(file.url, (err) => {
+                fs.unlink(new URL(file.url), (err) => {
                    
                     if (err) {
                       
