@@ -35,20 +35,6 @@ class FileController{
                 
                 return file
 
-            }else{
-
-                fs.unlink(new URL(file.url), (err) => {
-                   
-                    if (err) {
-                      
-                      console.error(err)
-
-                      return
-
-                    }
-                  
-                })
-
             }
         })
 
@@ -56,7 +42,21 @@ class FileController{
 
         await box.save()
 
-        await File.deleteOne( {_id: fileId})
+        await File.deleteOne( {_id: fileId}).then(
+            
+            fs.unlink(file.url, (err) => {
+                   
+                if (err) {
+                  
+                  console.error(err)
+
+                  return
+
+                }
+              
+            })
+            
+        )
             
         box = await Box.findById(req.params.id).populate({
             path: 'files',
