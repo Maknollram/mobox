@@ -43,7 +43,7 @@ class FileController{
 
         await File.deleteOne( {_id: fileId}).then(
             
-            fs.unlink(file.url.split('com/')[1], (err) => {
+            fs.unlink(file.url.split('com')[1], (err) => {
                    
                 if (err) {
                   
