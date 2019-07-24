@@ -10,19 +10,13 @@ class BoxController{
         return res.json(box)
     }
 
-    listBoxes(){
-
-        let boxes = list()
-
-        req.io.sockets.emit('box', boxes)
-
-    }
-    
     async store(req, res){
         
         const box = await Box.create({title: req.body.title})
 
-        listBoxes()
+        let boxes = await list()
+
+        req.io.sockets.emit('box', boxes)
         
         return res.json(box)
 
@@ -52,7 +46,9 @@ class BoxController{
         
         await box.deleteOne({_id: id})
 
-        listBoxes()
+        let boxes = await list()
+
+        req.io.sockets.emit('box', boxes)
 
         return res.json(box)
 
