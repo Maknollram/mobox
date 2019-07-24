@@ -22,7 +22,7 @@ class BoxController{
         
         const box = await Box.create({title: req.body.title})
 
-        this.listBoxes()
+        listBoxes()
         
         return res.json(box)
 
@@ -52,7 +52,7 @@ class BoxController{
         
         await box.deleteOne({_id: id})
 
-        this.listBoxes()
+        listBoxes()
 
         return res.json(box)
 
