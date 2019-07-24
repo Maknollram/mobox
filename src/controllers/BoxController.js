@@ -14,7 +14,7 @@ class BoxController{
         
         const box = await Box.create({title: req.body.title})
 
-        let boxes = await list()
+        let boxes = await this.list
 
         req.io.sockets.emit('box', boxes)
         
@@ -46,7 +46,7 @@ class BoxController{
         
         await box.deleteOne({_id: id})
 
-        let boxes = await list()
+        let boxes = await this.list
 
         req.io.sockets.emit('box', boxes)
 
