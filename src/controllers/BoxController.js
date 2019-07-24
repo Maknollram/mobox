@@ -3,9 +3,26 @@ const   Box = require('../models/Box'),
 
 class BoxController{
     
+    async list(req, res){
+
+        const box = await Box.find().sort( { title: 1 } )// 1 asc, -1 desc
+
+        return res.json(box)
+    }
+
+    listBoxes(){
+
+        let boxes = list()
+
+        req.io.sockets.emit('box', boxes)
+
+    }
+    
     async store(req, res){
         
         const box = await Box.create({title: req.body.title})
+
+        this.listBoxes()
         
         return res.json(box)
 
@@ -17,13 +34,6 @@ class BoxController{
             path: 'files',
             options: {sort: {createdAt: -1}}
         })
-
-        return res.json(box)
-    }
-
-    async list(req, res){
-
-        const box = await Box.find().sort( { title: 1 } )// 1 asc, -1 desc
 
         return res.json(box)
     }
@@ -41,6 +51,8 @@ class BoxController{
         })
         
         await box.deleteOne({_id: id})
+
+        this.listBoxes()
 
         return res.json(box)
 
